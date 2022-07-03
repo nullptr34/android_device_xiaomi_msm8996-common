@@ -1,7 +1,7 @@
 /*
    Copyright (c) 2015, The Linux Foundation. All rights reserved.
    Copyright (C) 2016 The CyanogenMod Project.
-   Copyright (C) 2017-2020 The LineageOS Project.
+   Copyright (C) 2017-2018 The LineageOS Project.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -41,6 +41,7 @@
 
 char const *heapminfree;
 char const *heapmaxfree;
+char const *heaptargetutilization;
 
 void check_device()
 {
@@ -50,12 +51,14 @@ void check_device()
 
     if (sys.totalram > 3072ull * 1024 * 1024) {
         // from - phone-xxxhdpi-4096-dalvik-heap.mk
-        heapminfree = "4m";
+        heapminfree = "8m";
         heapmaxfree = "16m";
+        heaptargetutilization = "0.6";
     } else {
         // from - phone-xxhdpi-3072-dalvik-heap.mk
         heapminfree = "512k";
         heapmaxfree = "8m";
+        heaptargetutilization = "0.75";
     }
 }
 
@@ -75,9 +78,9 @@ void vendor_load_properties()
     check_device();
 
     property_override("dalvik.vm.heapstartsize", "8m");
-    property_override("dalvik.vm.heapgrowthlimit", "256m");
+    property_override("dalvik.vm.heapgrowthlimit", "192m");
     property_override("dalvik.vm.heapsize", "512m");
-    property_override("dalvik.vm.heaptargetutilization", "0.75");
+    property_override("dalvik.vm.heaptargetutilization", heaptargetutilization);
     property_override("dalvik.vm.heapminfree", heapminfree);
     property_override("dalvik.vm.heapmaxfree", heapmaxfree);
 }

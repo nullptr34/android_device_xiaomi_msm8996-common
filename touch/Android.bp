@@ -15,16 +15,17 @@
 cc_binary {
     name: "vendor.lineage.touch@1.0-service.xiaomi_8996",
     init_rc: ["vendor.lineage.touch@1.0-service.xiaomi_8996.rc"],
+    vintf_fragments: ["vendor.lineage.touch@1.0-service.xiaomi_8996.xml"],
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
     vendor: true,
     srcs: [
         "KeyDisabler.cpp",
-        "KeySwapper.cpp",
         "service.cpp"
     ],
     shared_libs: [
         "libbase",
+        "libbinder",
         "libhidlbase",
         "libutils",
         "vendor.lineage.touch@1.0",
